@@ -1,0 +1,21 @@
+version: "3"
+services:
+  web:
+    build: .
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=db;Database=mydb;User Id=myuser;Password=sa_password;
+
+  db:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      - SA_PASSWORD=sa_password
+    volumes:
+      - db-data:/var/opt/mssql/data
+
+volumes:
+  db-data:
